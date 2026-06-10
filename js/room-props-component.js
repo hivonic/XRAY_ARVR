@@ -20,11 +20,11 @@ AFRAME.registerComponent('room-props', {
     this._buildFuseBox(el, '-4.85 1.8 -0.5');
 
     // Ruang Operator (di booth kanan-depan: x=2~5, z=0~5)
-    this._buildOperatorDesk(el, '3.2 0 3.5');
-    this._buildOperatorChair(el, '3.2 0 2.8');
-    this._buildMonitorStation(el, '3.2 0 4.4');
-    this._buildFilmStorageRack(el, '4.7 0 1.5');  // Rak film X-Ray
-    this._buildPACSWorkstation(el, '2.1 0 4.4');  // Workstation PACS
+    //this._buildOperatorDesk(el, '3.2 0 3.5');
+    this._buildOperatorChair(el, '3.2 0 2.5');
+    //this._buildMonitorStation(el, '3.2 0 4.4');
+    this._buildFilmStorageRack(el, '4.8 0 2.9');  // Rak film X-Ray
+    //this._buildPACSWorkstation(el, '2.1 0 4.4');  // Workstation PACS
 
     console.log('room-props aktif.');
   },
@@ -435,21 +435,11 @@ AFRAME.registerComponent('room-props', {
     lid.setAttribute('color', '#aa0000');
     g.appendChild(lid);
 
-    const label = document.createElement('a-text');
-    label.setAttribute('value', '⚠ LIMBAH\nMEDIS');
-    label.setAttribute('position', '0 0.3 0.19');
-    label.setAttribute('color', '#ffffff');
-    label.setAttribute('scale', '0.1 0.1 0.1');
-    label.setAttribute('align', 'center');
-    g.appendChild(label);
-
     const pedal = document.createElement('a-box');
     pedal.setAttribute('position', '0 0.04 0.2');
     pedal.setAttribute('width', '0.1'); pedal.setAttribute('height', '0.02'); pedal.setAttribute('depth', '0.08');
     pedal.setAttribute('color', '#888888');
     g.appendChild(pedal);
-
-    this._floatLabel(g, '0 0.75 0', 'TEMPAT SAMPAH\nLimbah Medis B3');
   },
 
   // ================================
@@ -678,7 +668,7 @@ AFRAME.registerComponent('room-props', {
   // ================================
   _buildFilmStorageRack: function (parent, pos) {
     const g = this._group(parent, pos);
-    g.setAttribute('rotation', '0 90 0');
+    g.setAttribute('rotation', '0 180 0');
 
     // Frame rak
     const frame = document.createElement('a-box');

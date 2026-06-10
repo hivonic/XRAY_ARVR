@@ -10,9 +10,9 @@ AFRAME.registerComponent('room-lighting', {
       '-2.5 2.75 -3.3',
       '2.5 2.75 -3.3',
       '-2.5 2.75 0',
-      '2.5 2.75 0',
+      '2.5 2.75 -1.0', // Digeser agar tidak menabrak tembok pintu
       '-2.5 2.75 3.3',
-      '2.5 2.75 3.3'
+      '3.3 2.75 2.5'   // Dipindah ke tepat di tengah atap Ruang Operator
     ];
 
     const pointLightPositions = [
@@ -20,10 +20,10 @@ AFRAME.registerComponent('room-lighting', {
       '1.9 2.6 -3.3', '2.5 2.6 -3.3', '3.1 2.6 -3.3',
 
       '-3.1 2.6 0', '-2.5 2.6 0', '-1.9 2.6 0',
-      '1.9 2.6 0', '2.5 2.6 0', '3.1 2.6 0',
+      '1.9 2.6 -1.0', '2.5 2.6 -1.0', '3.1 2.6 -1.0', // Titik cahaya digeser mengikuti lampu
 
       '-3.1 2.6 3.3', '-2.5 2.6 3.3', '-1.9 2.6 3.3',
-      '1.9 2.6 3.3', '2.5 2.6 3.3', '3.1 2.6 3.3'
+      '2.7 2.6 2.5', '3.3 2.6 2.5', '3.9 2.6 2.5'     // Titik cahaya ruang operator
     ];
 
     ceilingLightPositions.forEach((position) => {
@@ -46,12 +46,14 @@ AFRAME.registerComponent('room-lighting', {
       const pointLight = document.createElement('a-light');
       pointLight.setAttribute('type', 'point');
       pointLight.setAttribute('position', position);
-      pointLight.setAttribute('intensity', '0.5');
-      pointLight.setAttribute('distance', '5');
+      pointLight.setAttribute('color', '#ffffff');
+      pointLight.setAttribute('intensity', '0.15');
+      pointLight.setAttribute('distance', '4');
+      pointLight.setAttribute('decay', '2');
 
       this.el.appendChild(pointLight);
     });
 
-    console.log('room-lighting aktif.');
+    console.log('room-lighting aktif (posisi lampu disesuaikan dengan layout baru).');
   }
 });

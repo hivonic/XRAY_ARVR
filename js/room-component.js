@@ -6,142 +6,46 @@
 AFRAME.registerComponent('room-builder', {
   init: function () {
     this.el.innerHTML = `
-      <!-- ===== RUANG UTAMA X-RAY ===== -->
+      <a-box position="0 0 0" width="10" height="0.1" depth="10" color="#888888"></a-box>
 
-      <!-- Lantai utama -->
-      <a-box
-        position="0 0 0"
-        width="10"
-        height="0.1"
-        depth="10"
-        color="#888888">
-      </a-box>
+      <a-box position="0 1.5 -5" width="10" height="3" depth="0.1" color="#dddddd"></a-box>
 
-      <!-- Dinding belakang -->
-      <a-box
-        position="0 1.5 -5"
-        width="10"
-        height="3"
-        depth="0.1"
-        color="#dddddd">
-      </a-box>
+      <a-box position="0 1.5 5" width="10" height="3" depth="0.1" color="#dddddd"></a-box>
 
-      <!-- Dinding depan -->
-      <a-box
-        position="0 1.5 5"
-        width="10"
-        height="3"
-        depth="0.1"
-        color="#dddddd">
-      </a-box>
+      <a-box position="-5 1.5 0" width="0.1" height="3" depth="10" color="#cccccc"></a-box>
 
-      <!-- Dinding kiri -->
-      <a-box
-        position="-5 1.5 0"
-        width="0.1"
-        height="3"
-        depth="10"
-        color="#cccccc">
-      </a-box>
+      <a-box position="5 1.5 0" width="0.1" height="3" depth="10" color="#cccccc"></a-box>
 
-      <!-- Dinding kanan -->
-      <a-box
-        position="5 1.5 0"
-        width="0.1"
-        height="3"
-        depth="10"
-        color="#cccccc">
-      </a-box>
+      <a-box position="0 3 0" width="10" height="0.1" depth="10" color="#eeeeee"></a-box>
 
-      <!-- Atap -->
-      <a-box
-        position="0 3 0"
-        width="10"
-        height="0.1"
-        depth="10"
-        color="#eeeeee">
-      </a-box>
+      <a-box position="1.75 0.5 2.5" width="0.1" height="1" depth="5" color="#cccccc"></a-box>
+      <a-box position="1.75 2.75 2.5" width="0.1" height="0.5" depth="5" color="#cccccc"></a-box>
+      <a-box position="1.75 1.75 0.75" width="0.1" height="1.5" depth="1.5" color="#cccccc"></a-box>
+      <a-box position="1.75 1.75 4.25" width="0.1" height="1.5" depth="1.5" color="#cccccc"></a-box>
 
-      <!-- ===== RUANG OPERATOR (booth kecil di pojok kanan depan) ===== -->
-      <!-- Ukuran booth: 3m x 2.5m, di posisi kanan-depan ruangan -->
+      <a-box position="1.75 1.75 2.5" width="0.06" height="1.5" depth="2" color="#99ccee" opacity="0.35" transparent="true"></a-box>
+      
+      <a-box position="1.75 1.0 2.5" width="0.14" height="0.05" depth="2.05" color="#444444"></a-box>
+      <a-box position="1.75 2.5 2.5" width="0.14" height="0.05" depth="2.05" color="#444444"></a-box>
+      <a-box position="1.75 1.75 1.5" width="0.14" height="1.45" depth="0.05" color="#444444"></a-box>
+      <a-box position="1.75 1.75 3.5" width="0.14" height="1.45" depth="0.05" color="#444444"></a-box>
 
-      <!-- Dinding partisi kiri booth (memisahkan dari ruang X-Ray utama) -->
-      <a-box
-        position="1.75 1.5 2.5"
-        width="0.1"
-        height="3"
-        depth="5"
-        color="#cccccc">
-      </a-box>
+      <a-box position="3.9 1.5 0" width="2.2" height="3" depth="0.1" color="#cccccc"></a-box>
+      
+      <a-box position="2.3 2.5 0" width="1.0" height="1.0" depth="0.1" color="#cccccc"></a-box>
 
-      <!-- Dinding partisi depan booth (kaca timbal / lead glass panel) -->
-      <!-- Bagian bawah: dinding solid -->
-      <a-box
-        position="3.375 0.5 5"
-        width="3.25"
-        height="1"
-        depth="0.12"
-        color="#bbbbbb">
-      </a-box>
-
-      <!-- Bagian atas: kaca timbal (transparan) -->
-      <a-box
-        position="3.375 1.75 5"
-        width="3.25"
-        height="1.5"
-        depth="0.08"
-        color="#99ccee"
-        opacity="0.35"
-        transparent="true">
-      </a-box>
-
-      <!-- Frame kaca timbal atas -->
-      <a-box
-        position="3.375 2.52 5"
-        width="3.26"
-        height="0.08"
-        depth="0.13"
-        color="#777777">
-      </a-box>
-      <a-box
-        position="3.375 1.0 5"
-        width="3.26"
-        height="0.08"
-        depth="0.13"
-        color="#777777">
-      </a-box>
-
-      <!-- Pintu masuk booth (bukaan di dinding partisi kiri, tidak ada fisik = gap) -->
-      <!-- Bingkai atas pintu -->
-      <a-box
-        position="1.75 2.7 3.75"
-        width="0.12"
-        height="0.25"
-        depth="1.0"
-        color="#aaaaaa">
-      </a-box>
-
-      <!-- Lantai booth (sedikit berbeda warna) -->
-      <a-box
-        position="3.375 0.06 2.5"
-        width="3.25"
-        height="0.02"
-        depth="5"
-        color="#9a9a9a">
-      </a-box>
-
-      <!-- Label ruang operator di atas kaca -->
-      <a-text
-        value="RUANG OPERATOR"
-        position="3.375 2.85 4.94"
-        color="#003366"
-        align="center"
+      <a-box position="2.8 1.0 0" width="0.05" height="2" depth="0.12" color="#aaaaaa"></a-box> <a-box position="1.8 1.0 0" width="0.05" height="2" depth="0.12" color="#aaaaaa"></a-box> <a-box position="2.3 2.0 0" width="1.0" height="0.05" depth="0.12" color="#aaaaaa"></a-box> <a-text 
+        value="RUANG OPERATOR" 
+        position="1.68 2.8 2.5" 
+        rotation="0 -90 0" 
+        color="#003366" 
+        align="center" 
         scale="0.25 0.25 0.25">
       </a-text>
 
-      <!-- Atap --> 
+      <a-box position="3.375 0.06 2.5" width="3.25" height="0.02" depth="5" color="#9a9a9a"></a-box>
     `;
 
-    console.log('room-builder aktif (dengan ruang operator).');
+    console.log('room-builder aktif (ruang operator tertutup separuh dengan celah pintu di belakang).');
   }
 });
