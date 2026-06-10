@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>X-Ray Room VR — Enhanced</title>
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    #patientFormOverlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.78);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+
+    #patientFormBox {
+      background: #0d1b2a;
+      border: 1px solid #00aaff;
+      border-radius: 12px;
+      width: 520px;
+      max-width: 95vw;
+      padding: 28px 32px;
+      box-shadow: 0 0 40px rgba(0,170,255,0.35);
+      color: #e0f0ff;
+    }
+
+    #patientFormBox h2 {
+      font-size: 1.3rem;
+      color: #00ccff;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .subtitle {
+      font-size: 0.75rem;
+      color: #4488aa;
+      margin-bottom: 20px;
+      letter-spacing: 1px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 13px;
+    }
+
+    .form-group { display: flex; flex-direction: column; }
+    .form-group.full { grid-column: 1/-1; }
+
+    .form-group label {
+      font-size: 0.7rem;
+      color: #7ab;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 5px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background: #112233;
+      border: 1px solid #224466;
+      border-radius: 6px;
+      color: #e0f0ff;
+      padding: 8px 10px;
+      font-size: 0.88rem;
+      outline: none;
+      transition: border-color .2s;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: #00aaff;
+      box-shadow: 0 0 6px rgba(0,170,255,.3);
+    }
+
+    .form-group select option { background: #112233; }
+    .form-group textarea { resize: vertical; min-height: 65px; }
+
+    .divider {
+      grid-column: 1/-1;
+      border: none;
+      border-top: 1px solid #224466;
+      margin: 2px 0;
+    }
+
+    .section-label {
+      grid-column: 1/-1;
+      font-size: 0.68rem;
+      color: #00aaff;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .btn-row {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .btn-row button {
+      padding: 9px 22px;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.86rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: background .2s, transform .1s;
+    }
+
+    .btn-row button:active { transform: scale(.97); }
+
+    #btnSimpanPasien { background: #006eff; color: #fff; }
+    #btnSimpanPasien:hover { background: #0088ff; }
+    #btnBatalPasien { background: #1a2a3a; color: #aabbcc; border: 1px solid #224466; }
+    #btnBatalPasien:hover { background: #223344; }
+
+    #pasienSavedMsg {
+      display: none;
+      text-align: center;
+      margin-top: 12px;
+      color: #00ff88;
+      font-size: 0.86rem;
+      letter-spacing: 1px;
+    }
+
+    #inSceneHUD {
+      position: fixed;
+      top: 12px; left: 12px;
+      background: rgba(0,10,20,0.82);
+      border: 1px solid #225577;
+      border-radius: 8px;
+      padding: 10px 16px;
+      color: #aaddff;
+      font-family: 'Segoe UI', monospace;
+      font-size: 0.78rem;
+      z-index: 100;
+      pointer-events: none;
+      min-width: 175px;
+      line-height: 1.65;
+    }
+
+    #inSceneHUD .hud-title {
+      color: #00aaff;
+      font-weight: bold;
+      letter-spacing: 1px;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    #scanCounter {
+      position: fixed;
+      top: 12px; right: 12px;
+      background: rgba(0,10,20,0.82);
+      border: 1px solid #225577;
+      border-radius: 8px;
+      padding: 8px 14px;
+      color: #00ff88;
+      font-family: monospace;
+      font-size: 0.75rem;
+      z-index: 100;
+      pointer-events: none;
+      line-height: 1.6;
+    }
+  </style>
+
+  <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v7.2.0/dist/aframe-extras.min.js"></script>
+
+  <script src="js/pose-config.js"></script>
+  <script src="js/helpers.js"></script>
+  <script src="js/bone-limit.js"></script>
+  <script src="js/reset-components.js"></script>
+  <script src="js/movement-components.js"></script>
+  <script src="js/body-pose-components.js"></script>
+  <script src="js/bone-grab-control.js"></script>
+  <script src="js/bone-follow-anchor.js"></script>
+  <script src="js/room-component.js"></script>
+  <script src="js/lighting-component.js"></script>
+  <script src="js/grab-anchor-builder.js"></script>
+  <script src="js/ui-buttons-component.js"></script>
+  <script src="js/decorations-component.js"></script>
+
+  <!-- KOMPONEN BARU -->
+  <script src="js/room-props-component.js"></script>
+  <script src="js/xray-monitor-component.js"></script>
+  <script src="js/main.js"></script>
+</head>
+
+<body>
+
+  <!-- HUD PASIEN -->
+  <div id="inSceneHUD">
+    <div class="hud-title">📋 Data Pasien</div>
+    <div id="hudNama">Nama: —</div>
+    <div id="hudUmur">Umur: —</div>
+    <div id="hudDokter">Dokter: —</div>
+    <div id="hudBagian">Bagian: —</div>
+    <div id="hudStatus" style="color:#ffcc44">Status: Standby</div>
+  </div>
+
+  <!-- COUNTER SCAN -->
+  <div id="scanCounter">
+    <div style="color:#00aaff;letter-spacing:1px;font-size:0.68rem;margin-bottom:2px">SCAN INFO</div>
+    <div id="ctrScan">Scan: 0</div>
+    <div id="ctrWaktu">—</div>
+  </div>
+
+  <!-- FORM DATA PASIEN -->
+  <div id="patientFormOverlay">
+    <div id="patientFormBox">
+      <h2>⚕ Input Data Pasien</h2>
+      <p class="subtitle">Sistem Informasi Radiologi — X-Ray VR</p>
+
+      <div class="form-grid">
+        <div class="section-label">📌 Identitas Pasien</div>
+
+        <div class="form-group full">
+          <label>Nama Lengkap</label>
+          <input type="text" id="fNama" placeholder="Nama lengkap pasien" />
+        </div>
+
+        <div class="form-group">
+          <label>Tanggal Lahir</label>
+          <input type="date" id="fTglLahir" />
+        </div>
+
+        <div class="form-group">
+          <label>Jenis Kelamin</label>
+          <select id="fJK">
+            <option value="">— Pilih —</option>
+            <option value="L">Laki-laki</option>
+            <option value="P">Perempuan</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>No. Rekam Medis</label>
+          <input type="text" id="fNoRM" placeholder="RM-202600123" />
+        </div>
+
+        <div class="form-group">
+          <label>No. HP / Wali</label>
+          <input type="text" id="fNoHP" placeholder="08xx-xxxx-xxxx" />
+        </div>
+
+        <hr class="divider" />
+        <div class="section-label">🩺 Informasi Medis</div>
+
+        <div class="form-group">
+          <label>Nama Dokter</label>
+          <input type="text" id="fDokter" placeholder="dr. Nama Dokter" />
+        </div>
+
+        <div class="form-group">
+          <label>Bagian / Poli</label>
+          <select id="fBagian">
+            <option value="">— Pilih —</option>
+            <option>Thorax / Dada</option>
+            <option>Abdomen / Perut</option>
+            <option>Kepala / Skull</option>
+            <option>Ekstremitas Atas</option>
+            <option>Ekstremitas Bawah</option>
+            <option>Vertebra / Spine</option>
+            <option>Pelvis / Panggul</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Tinggi Badan (cm)</label>
+          <input type="number" id="fTB" placeholder="170" min="50" max="250" />
+        </div>
+
+        <div class="form-group">
+          <label>Berat Badan (kg)</label>
+          <input type="number" id="fBB" placeholder="70" min="1" max="300" />
+        </div>
+
+        <div class="form-group full">
+          <label>Keluhan / Indikasi Klinis</label>
+          <textarea id="fKeluhan" placeholder="Tuliskan keluhan atau indikasi klinis..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Prioritas</label>
+          <select id="fPrioritas">
+            <option>Normal</option>
+            <option>Urgent</option>
+            <option>Emergency</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Tanggal Pemeriksaan</label>
+          <input type="date" id="fTglPeriksa" />
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button id="btnBatalPasien">Batal</button>
+        <button id="btnSimpanPasien">Simpan Data</button>
+      </div>
+      <div id="pasienSavedMsg">✓ Data pasien berhasil disimpan!</div>
+    </div>
+  </div>
+
+  <!-- A-SCENE -->
+  <a-scene
+    cursor="rayOrigin: mouse"
+    raycaster="objects: .clickable"
+    renderer="antialias: true; colorManagement: true">
+
+    <a-assets>
+      <a-asset-item id="xrayBed"      src="Model/x-ray_bed.glb"></a-asset-item>
+      <a-asset-item id="ceilingLight" src="Model/ceiling_light_02.glb"></a-asset-item>
+      <a-asset-item id="maleBody"     src="Model/poppy_playtime_chapter_5_-_hazmat_guy.glb"></a-asset-item>
+    </a-assets>
+
+    <!-- Ruangan dasar -->
+    <a-entity room-builder></a-entity>
+
+    <!-- Overlay lantai vinyl hijau-putih khas radiologi -->
+    <a-box position="0 0.061 0" width="9.8" height="0.002" depth="9.8" color="#d4e8df" opacity="0.5"></a-box>
+
+    <!-- X-Ray Bed -->
+    <a-gltf-model src="#xrayBed" position="0 0 0" rotation="0 90 0" scale="1 1 1"></a-gltf-model>
+
+    <!-- Dekorasi bawaan (referensi GLB yang mungkin tidak ada, aman jika model tidak dimuat) -->
+    <a-entity xray-decorations></a-entity>
+
+    <!-- Model pasien -->
+    <a-gltf-model
+      id="maleBodyModel"
+      src="#maleBody"
+      initial-arm-pose
+      position="0.9 0.95 0"
+      rotation="-90 90 0"
+      scale="0.1 0.1 0.1">
+    </a-gltf-model>
+
+    <!-- Sphere grab tangan & kaki -->
+    <a-entity body-grab-anchors></a-entity>
+
+    <!-- Tombol UI lama (pose/reset) -->
+    <a-entity xray-ui-buttons></a-entity>
+
+    <!-- ============ MONITOR X-RAY BARU ============ -->
+    <a-entity xray-monitor position="2.5 0.9 -3.5" rotation="0 180 0"></a-entity>
+
+    <!-- ============ PROPS RUANGAN ============ -->
+    <a-entity room-props></a-entity>
+
+    <!-- Garis panduan zona -->
+    <a-box position="0 0.075 0" width="3.2" height="0.004" depth="0.04" color="#ff4444" opacity="0.55"></a-box>
+    <a-box position="0 0.075 0" width="0.04" height="0.004" depth="3.2" color="#ff4444" opacity="0.55"></a-box>
+
+    <a-text value="ZONA PASIEN"   position="0 0.09 1.9"  rotation="-90 0 0" color="#ff4444" scale="0.28 0.28 0.28" align="center" opacity="0.65"></a-text>
+    <a-text value="ZONA OPERATOR" position="0 0.09 -3.6" rotation="-90 0 0" color="#0088ff" scale="0.28 0.28 0.28" align="center" opacity="0.65"></a-text>
+
+    <!-- Plang nama ruangan -->
+    <a-box position="0 2.62 4.92" width="2.2" height="0.38" depth="0.05" color="#003366"></a-box>
+    <a-text value="RUANG RADIOLOGI — X-RAY" position="0 2.62 4.95" color="#00ccff" scale="0.27 0.27 0.27" align="center"></a-text>
+
+    <!-- Safety sign -->
+    <a-box position="4.92 2.1 0" width="0.04" height="0.52" depth="0.52" color="#ffdd00"></a-box>
+    <a-text value="⚠ RADIASI&#10;HARAP MENJAUHI&#10;AREA INI" position="4.9 2.1 0" rotation="0 -90 0" color="#cc0000" scale="0.11 0.11 0.11" align="center"></a-text>
+
+    <!-- Lampu aksen biru monitor -->
+    <a-light type="point" position="2.5 2 -3.5" color="#0055ff" intensity="0.4" distance="4"></a-light>
+    <!-- Lampu merah darurat pojok -->
+    <a-light type="point" position="-4.5 2.8 -4.5" color="#ff2200" intensity="0.25" distance="3"></a-light>
+
+    <!-- Lampu ruangan utama -->
+    <a-entity room-lighting></a-entity>
+
+    <!-- Kamera & controller -->
+    <a-entity id="rig" movement-controls="speed: 0.2" position="0 1.6 3" limit-room>
+      <a-entity camera look-controls>
+        <a-cursor color="cyan" opacity="0" raycaster="objects: .clickable"></a-cursor>
+      </a-entity>
+      <a-entity id="rightHand" laser-controls="hand: right" raycaster="objects: .clickable; far: 10" cursor="rayOrigin: entity; fuse: false"></a-entity>
+      <a-entity id="leftHand"  laser-controls="hand: left"  raycaster="objects: .clickable; far: 10" cursor="rayOrigin: entity; fuse: false"></a-entity>
+    </a-entity>
+
+  </a-scene>
+
+  <script>
+    // Set tanggal default
+    document.addEventListener('DOMContentLoaded', () => {
+      const today = new Date().toISOString().split('T')[0];
+      const el = document.getElementById('fTglPeriksa');
+      if (el) el.value = today;
+    });
+
+    // Form — tutup
+    document.getElementById('btnBatalPasien').addEventListener('click', () => {
+      document.getElementById('patientFormOverlay').style.display = 'none';
+      document.getElementById('pasienSavedMsg').style.display = 'none';
+    });
+
+    // Form — simpan
+    document.getElementById('btnSimpanPasien').addEventListener('click', () => {
+      const nama      = document.getElementById('fNama').value.trim() || '—';
+      const dokter    = document.getElementById('fDokter').value.trim() || '—';
+      const bagian    = document.getElementById('fBagian').value || '—';
+      const tglLahir  = document.getElementById('fTglLahir').value || '';
+      const noRM      = document.getElementById('fNoRM').value.trim() || '—';
+      const prioritas = document.getElementById('fPrioritas').value || 'Normal';
+
+      let umurStr = '—';
+      if (tglLahir) {
+        const umur = new Date().getFullYear() - new Date(tglLahir).getFullYear();
+        umurStr = umur + ' th';
+      }
+
+      document.getElementById('hudNama').textContent   = 'Nama: ' + nama;
+      document.getElementById('hudUmur').textContent   = 'Umur: ' + umurStr;
+      document.getElementById('hudDokter').textContent = 'Dokter: ' + dokter;
+      document.getElementById('hudBagian').textContent = 'Bagian: ' + bagian;
+
+      const statusEl = document.getElementById('hudStatus');
+      statusEl.textContent = 'Status: ' + prioritas;
+      statusEl.style.color = prioritas === 'Emergency' ? '#ff4444' :
+                             prioritas === 'Urgent'    ? '#ffaa00' : '#00ff88';
+
+      // Update whiteboard di scene
+      const wb = document.getElementById('whiteboardText');
+      if (wb) {
+        wb.setAttribute('value',
+          `RUANG X-RAY\n━━━━━━━━━━━━━━━━━\nPasien: ${nama}\nDokter: ${dokter}\nBagian: ${bagian}\nRM: ${noRM}\nStatus: ${prioritas}`
+        );
+      }
+
+      // Update layar monitor
+      const xs = document.getElementById('xrayStatusText');
+      if (xs) {
+        xs.setAttribute('value', `PASIEN: ${nama}\nBagian: ${bagian}\nSIAP SCAN`);
+      }
+
+      const msg = document.getElementById('pasienSavedMsg');
+      msg.style.display = 'block';
+      setTimeout(() => {
+        msg.style.display = 'none';
+        document.getElementById('patientFormOverlay').style.display = 'none';
+      }, 1800);
+    });
+
+    // Klik di luar form = tutup
+    document.getElementById('patientFormOverlay').addEventListener('click', (e) => {
+      if (e.target.id === 'patientFormOverlay') {
+        document.getElementById('patientFormOverlay').style.display = 'none';
+      }
+    });
+
+    // Update scan counter dari event
+    let scanN = 0;
+    document.addEventListener('xray-action', (e) => {
+      if (e.detail.action === 'ambilCitra') {
+        scanN++;
+        const now = new Date();
+        document.getElementById('ctrScan').textContent = 'Scan: ' + scanN;
+        document.getElementById('ctrWaktu').textContent =
+          now.getHours().toString().padStart(2,'0') + ':' +
+          now.getMinutes().toString().padStart(2,'0') + ':' +
+          now.getSeconds().toString().padStart(2,'0');
+      }
+    });
+  </script>
+
+</body>
+</html>
