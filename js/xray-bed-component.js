@@ -103,7 +103,7 @@ AFRAME.registerComponent('xray-bed', {
     // ==============================
 
     const leftButtonGroup = document.createElement('a-entity');
-    leftButtonGroup.setAttribute('position', '0.7 1.05 0.5');
+    leftButtonGroup.setAttribute('position', '0.7 0.8 0.6');
     leftButtonGroup.setAttribute('rotation', '0 0 0');
 
     const leftButton = document.createElement('a-box');
@@ -112,12 +112,12 @@ AFRAME.registerComponent('xray-bed', {
     leftButton.setAttribute('position', '0 0 0');
     leftButton.setAttribute('width', '0.35');
     leftButton.setAttribute('height', '0.12');
-    leftButton.setAttribute('depth', '0.25');
+    leftButton.setAttribute('depth', '0.12');
     leftButton.setAttribute('color', '#2255ff');
 
     const leftText = document.createElement('a-text');
     leftText.setAttribute('value', '<-');
-    leftText.setAttribute('position', '0 0 0.14');
+    leftText.setAttribute('position', '0 0 0.06');
     leftText.setAttribute('color', '#ffffff');
     leftText.setAttribute('align', 'center');
     leftText.setAttribute('scale', '0.5 0.5 0.5');
@@ -133,7 +133,7 @@ AFRAME.registerComponent('xray-bed', {
     // ==============================
 
     const rightButtonGroup = document.createElement('a-entity');
-    rightButtonGroup.setAttribute('position', '1.05 1.05 0.5');
+    rightButtonGroup.setAttribute('position', '1.05 0.8 0.6');
     rightButtonGroup.setAttribute('rotation', '0 0 0');
 
     const rightButton = document.createElement('a-box');
@@ -142,12 +142,12 @@ AFRAME.registerComponent('xray-bed', {
     rightButton.setAttribute('position', '0 0 0');
     rightButton.setAttribute('width', '0.35');
     rightButton.setAttribute('height', '0.12');
-    rightButton.setAttribute('depth', '0.25');
+    rightButton.setAttribute('depth', '0.12');
     rightButton.setAttribute('color', '#2255ff');
 
     const rightText = document.createElement('a-text');
     rightText.setAttribute('value', '->');
-    rightText.setAttribute('position', '0 0 0.14');
+    rightText.setAttribute('position', '0 0 0.06');
     rightText.setAttribute('color', '#ffffff');
     rightText.setAttribute('align', 'center');
     rightText.setAttribute('scale', '0.5 0.5 0.5');
