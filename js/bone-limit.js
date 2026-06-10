@@ -10,7 +10,7 @@ function applyBoneRotationLimit(side, part, rotX, rotY, rotZ) {
   // ==============================
 
   if (side === 'right' && part === 'upper') {
-    rotX = clampRadians(rotX, -30, 130);
+    rotX = clampRadians(rotX, -130, 130);
     rotY = clampRadians(rotY, -35, 35);
     rotZ = clampRadians(rotZ, -130, 130);
   }
@@ -26,7 +26,7 @@ function applyBoneRotationLimit(side, part, rotX, rotY, rotZ) {
   // ==============================
 
   if (side === 'left' && part === 'upper') {
-    rotX = clampRadians(rotX, -30, 130);
+    rotX = clampRadians(rotX, -130, 130);
     rotY = clampRadians(rotY, -35, 35);
     rotZ = clampRadians(rotZ, -130, 130);
   }
