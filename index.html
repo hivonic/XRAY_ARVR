@@ -339,6 +339,34 @@
     <!-- X-Ray Bed -->
     <a-entity xray-bed></a-entity>
 
+    <a-cone 
+      id="xrayBeam" 
+      position="0 2.8 0" 
+      radius-bottom="1.2" 
+      radius-top="0.1" 
+      height="3" 
+      color="#00ffff" 
+      opacity="0" 
+      transparent="true" 
+      open-ended="true"
+      side="double"
+      animation__fadein="property: opacity; from: 0; to: 0.6; dur: 300; startEvents: start-xray"
+      animation__fadeout="property: opacity; from: 0.6; to: 0; dur: 800; startEvents: stop-xray">
+    </a-cone>
+    
+    <a-light 
+      id="xraySpotlight" 
+      type="spot" 
+      position="0 2.8 0" 
+      rotation="-90 0 0" 
+      color="#00ffff" 
+      intensity="0" 
+      angle="35" 
+      penumbra="0.5"
+      animation__on="property: intensity; from: 0; to: 1.5; dur: 300; startEvents: start-xray"
+      animation__off="property: intensity; from: 1.5; to: 0; dur: 800; startEvents: stop-xray">
+    </a-light>
+
     <!-- Dekorasi bawaan (referensi GLB yang mungkin tidak ada, aman jika model tidak dimuat) -->
     <a-entity xray-decorations></a-entity>
 

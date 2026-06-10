@@ -277,6 +277,11 @@ AFRAME.registerComponent('xray-monitor', {
     const screenEl = document.querySelector('#xrayScreenDisplay');
     const indAlert = document.querySelector('#indAlert');
     const indStby  = document.querySelector('#indStandby');
+    
+    // --- Elemen Efek Sinar X-Ray ---
+    const xrayBeam = document.querySelector('#xrayBeam');
+    const xraySpotlight = document.querySelector('#xraySpotlight');
+
     if (!statusEl) return;
 
     // Status berubah: scanning
@@ -286,6 +291,11 @@ AFRAME.registerComponent('xray-monitor', {
     if (indAlert) indAlert.setAttribute('color', '#ffaa00');
     if (indStby)  indStby.setAttribute('color', '#444400');
 
+    // === MEMULAI SINAR X-RAY ===
+    if (xrayBeam) xrayBeam.emit('start-xray');
+    if (xraySpotlight) xraySpotlight.emit('start-xray');
+
+    // Waktu tunggu selesai scan (2.2 detik)
     setTimeout(() => {
       const ts = new Date().toLocaleTimeString('id-ID');
       statusEl.setAttribute('value',
@@ -295,6 +305,11 @@ AFRAME.registerComponent('xray-monitor', {
       if (screenEl) screenEl.setAttribute('color', '#050f07');
       if (indAlert) indAlert.setAttribute('color', '#ff3333');
       if (indStby)  indStby.setAttribute('color', '#ffaa00');
+
+      // === MEMATIKAN SINAR X-RAY ===
+      if (xrayBeam) xrayBeam.emit('stop-xray');
+      if (xraySpotlight) xraySpotlight.emit('stop-xray');
+      
     }, 2200);
   },
 
