@@ -1,6 +1,7 @@
 // ==============================
 // reset-components.js
 // Fungsi initial pose dan tombol reset.
+// Reset semua sekarang juga me-reset kasur atas.
 // ==============================
 
 function applyInitialArmPose(side) {
@@ -157,15 +158,24 @@ AFRAME.registerComponent('reset-body-and-arm-pose', {
 
       const initialPose = BODY_POSES[0];
 
+      // Reset tubuh ke posisi awal.
       body.setAttribute('position', initialPose.position);
       body.setAttribute('rotation', initialPose.rotation);
 
+      // Reset kasur atas ke posisi awal.
+      const xrayBed = document.querySelector('[xray-bed]');
+
+      if (xrayBed && xrayBed.components['xray-bed']) {
+        xrayBed.components['xray-bed'].resetBedTop();
+      }
+
+      // Reset tangan dan kaki.
       applyInitialArmPose('all');
       applyInitialLegPose('all');
 
       updateMaleBodyMatrix();
 
-      console.log('Reset tubuh, tangan, dan kaki ke initial pose.');
+      console.log('Reset tubuh, tangan, kaki, dan kasur atas ke initial pose.');
     });
   }
 });

@@ -191,8 +191,7 @@
   <script src="js/grab-anchor-builder.js"></script>
   <script src="js/ui-buttons-component.js"></script>
   <script src="js/decorations-component.js"></script>
-
-  <!-- KOMPONEN BARU -->
+  <script src="js/xray-bed-component.js"></script>
   <script src="js/room-props-component.js"></script>
   <script src="js/xray-monitor-component.js"></script>
   <script src="js/main.js"></script>
@@ -322,7 +321,11 @@
     renderer="antialias: true; colorManagement: true">
 
     <a-assets>
-      <a-asset-item id="xrayBed"      src="Model/x-ray_bed.glb"></a-asset-item>
+    <a-asset-item id="bedTopModel" src="Model/Kasur_atas.glb"></a-asset-item>
+    <a-asset-item id="bedBottomModel" src="Model/Kasur_bawah.glb"></a-asset-item>
+    <a-asset-item id="bedPairModel" src="Model/Pasangan.glb"></a-asset-item>
+    <a-asset-item id="bedPolePairModel" src="Model/Pasangan_Tiang.glb"></a-asset-item>
+
       <a-asset-item id="ceilingLight" src="Model/ceiling_light_02.glb"></a-asset-item>
       <a-asset-item id="maleBody"     src="Model/poppy_playtime_chapter_5_-_hazmat_guy.glb"></a-asset-item>
     </a-assets>
@@ -334,7 +337,7 @@
     <a-box position="0 0.061 0" width="9.8" height="0.002" depth="9.8" color="#d4e8df" opacity="0.5"></a-box>
 
     <!-- X-Ray Bed -->
-    <a-gltf-model src="#xrayBed" position="0 0 0" rotation="0 90 0" scale="1 1 1"></a-gltf-model>
+    <a-entity xray-bed></a-entity>
 
     <!-- Dekorasi bawaan (referensi GLB yang mungkin tidak ada, aman jika model tidak dimuat) -->
     <a-entity xray-decorations></a-entity>
