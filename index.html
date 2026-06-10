@@ -199,7 +199,6 @@
 
 <body>
 
-  <!-- HUD PASIEN -->
   <div id="inSceneHUD">
     <div class="hud-title">📋 Data Pasien</div>
     <div id="hudNama">Nama: —</div>
@@ -209,14 +208,12 @@
     <div id="hudStatus" style="color:#ffcc44">Status: Standby</div>
   </div>
 
-  <!-- COUNTER SCAN -->
   <div id="scanCounter">
     <div style="color:#00aaff;letter-spacing:1px;font-size:0.68rem;margin-bottom:2px">SCAN INFO</div>
     <div id="ctrScan">Scan: 0</div>
     <div id="ctrWaktu">—</div>
   </div>
 
-  <!-- FORM DATA PASIEN -->
   <div id="patientFormOverlay">
     <div id="patientFormBox">
       <h2>⚕ Input Data Pasien</h2>
@@ -314,30 +311,26 @@
     </div>
   </div>
 
-  <!-- A-SCENE -->
   <a-scene
     cursor="rayOrigin: mouse"
     raycaster="objects: .clickable"
     renderer="antialias: true; colorManagement: true">
 
     <a-assets>
-    <a-asset-item id="bedTopModel" src="Model/Kasur_atas.glb"></a-asset-item>
-    <a-asset-item id="bedBottomModel" src="Model/Kasur_bawah.glb"></a-asset-item>
-    <a-asset-item id="bedPairModel" src="Model/Pasangan.glb"></a-asset-item>
-    <a-asset-item id="bedPolePairModel" src="Model/Pasangan_Tiang.glb"></a-asset-item>
-
+      <a-asset-item id="bedTopModel" src="Model/Kasur_atas.glb"></a-asset-item>
+      <a-asset-item id="bedBottomModel" src="Model/Kasur_bawah.glb"></a-asset-item>
+      <a-asset-item id="bedPairModel" src="Model/Pasangan.glb"></a-asset-item>
+      <a-asset-item id="bedPolePairModel" src="Model/Pasangan_Tiang.glb"></a-asset-item>
       <a-asset-item id="ceilingLight" src="Model/ceiling_light_02.glb"></a-asset-item>
       <a-asset-item id="maleBody"     src="Model/poppy_playtime_chapter_5_-_hazmat_guy.glb"></a-asset-item>
-      <img id="hasilXray" src="Image\hasil xray.avif">
+      <img id="hasilXray" src="Image/hasil xray.avif">
     </a-assets>
 
-    <!-- Ruangan dasar -->
     <a-entity room-builder></a-entity>
 
-    <!-- Overlay lantai vinyl hijau-putih khas radiologi -->
-    <a-box position="0 0.061 0" width="9.8" height="0.002" depth="9.8" color="#d4e8df" opacity="0.5"></a-box>
+    <a-plane position="0 0.062 0" rotation="-90 0 0" width="9.8" height="9.8" 
+             material="src: url(data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Crect width='64' height='64' fill='%23cfd8dc'/%3E%3Crect x='1' y='1' width='62' height='62' fill='%23f8f9fa'/%3E%3C/svg%3E); repeat: 25 25;"></a-plane>
 
-    <!-- X-Ray Bed -->
     <a-entity xray-bed></a-entity>
 
     <a-cone 
@@ -368,10 +361,8 @@
       animation__off="property: intensity; from: 1.5; to: 0; dur: 800; startEvents: stop-xray">
     </a-light>
 
-    <!-- Dekorasi bawaan (referensi GLB yang mungkin tidak ada, aman jika model tidak dimuat) -->
     <a-entity xray-decorations></a-entity>
 
-    <!-- Model pasien -->
     <a-gltf-model
       id="maleBodyModel"
       src="#maleBody"
@@ -381,38 +372,28 @@
       scale="0.1 0.1 0.1">
     </a-gltf-model>
 
-    <!-- Sphere grab tangan & kaki -->
     <a-entity body-grab-anchors></a-entity>
 
-    <!-- Tombol UI lama (pose/reset) -->
     <a-entity xray-ui-buttons></a-entity>
 
-    <!-- ============ MONITOR X-RAY BARU ============ -->
     <a-entity xray-monitor position="2.3 0.5 2.5" rotation="0 90 0"></a-entity>
 
-    <!-- ============ PROPS RUANGAN ============ -->
     <a-entity room-props></a-entity>
 
-    <!-- Garis panduan zona -->
     <a-box position="0 0.075 0" width="3.2" height="0.004" depth="0.04" color="#ff4444" opacity="0.55"></a-box>
     <a-box position="0 0.075 0" width="0.04" height="0.004" depth="3.2" color="#ff4444" opacity="0.55"></a-box>
 
     <a-text value="ZONA PASIEN"   position="0 0.09 1.9"  rotation="-90 0 0" color="#ff4444" scale="0.28 0.28 0.28" align="center" opacity="0.65"></a-text>
     <a-text value="ZONA OPERATOR" position="0 0.09 -3.6" rotation="-90 0 0" color="#0088ff" scale="0.28 0.28 0.28" align="center" opacity="0.65"></a-text>
 
-    <!-- Plang nama ruangan -->
     <a-box position="0 2.62 4.92" width="2.2" height="0.38" depth="0.05" color="#003366"></a-box>
     <a-text value="RUANG RADIOLOGI — X-RAY" position="0 2.62 4.95" color="#00ccff" scale="0.27 0.27 0.27" align="center"></a-text>
 
-    <!-- Lampu aksen biru monitor -->
     <a-light type="point" position="2.5 2 -3.5" color="#0055ff" intensity="0.4" distance="4"></a-light>
-    <!-- Lampu merah darurat pojok -->
     <a-light type="point" position="-4.5 2.8 -4.5" color="#ff2200" intensity="0.25" distance="3"></a-light>
 
-    <!-- Lampu ruangan utama -->
     <a-entity room-lighting></a-entity>
 
-    <!-- Kamera & controller -->
     <a-entity id="rig" movement-controls="speed: 0.2" position="0 1.6 3" limit-room>
       <a-entity camera look-controls>
         <a-cursor color="cyan" opacity="0" raycaster="objects: .clickable"></a-cursor>
@@ -424,20 +405,45 @@
   </a-scene>
 
   <script>
-    // Set tanggal default
     document.addEventListener('DOMContentLoaded', () => {
       const today = new Date().toISOString().split('T')[0];
       const el = document.getElementById('fTglPeriksa');
       if (el) el.value = today;
+
+      // =========================================================================
+      // AUTO UBAH WARNA TEMBOK JADI BIRU (#A0D1EC) & TABUNG GAS JADI PUTIH
+      // =========================================================================
+      setTimeout(() => {
+        // 1. Ubah dinding jadi biru soft
+        const kotakRuangan = document.querySelectorAll('a-box');
+        kotakRuangan.forEach(box => {
+          const h = parseFloat(box.getAttribute('height') || 0);
+          const w = parseFloat(box.getAttribute('width') || 0);
+          const d = parseFloat(box.getAttribute('depth') || 0);
+          
+          // Deteksi dinding (ukuran besar)
+          if (h >= 3 && (w >= 4 || d >= 4)) {
+            box.setAttribute('color', '#A0D1EC');
+          }
+        });
+
+        // 2. Ubah tabung gas jadi putih silver
+        const semuaTabung = document.querySelectorAll('a-cylinder, a-sphere');
+        semuaTabung.forEach(part => {
+          const warna = part.getAttribute('color');
+          // Mencari warna tabung gas bawaan sebelumnya (biru/abu-abu)
+          if (warna === '#88bbff' || warna === '#5588dd' || warna === '#666666') {
+            part.setAttribute('color', '#e0e5e8'); // Warna putih silver
+          }
+        });
+      }, 1500); // Jeda sebentar agar komponen selesai di-render
     });
 
-    // Form — tutup
     document.getElementById('btnBatalPasien').addEventListener('click', () => {
       document.getElementById('patientFormOverlay').style.display = 'none';
       document.getElementById('pasienSavedMsg').style.display = 'none';
     });
 
-    // Form — simpan
     document.getElementById('btnSimpanPasien').addEventListener('click', () => {
       const nama      = document.getElementById('fNama').value.trim() || '—';
       const dokter    = document.getElementById('fDokter').value.trim() || '—';
@@ -462,7 +468,6 @@
       statusEl.style.color = prioritas === 'Emergency' ? '#ff4444' :
                              prioritas === 'Urgent'    ? '#ffaa00' : '#00ff88';
 
-      // Update whiteboard di scene
       const wb = document.getElementById('whiteboardText');
       if (wb) {
         wb.setAttribute('value',
@@ -470,11 +475,52 @@
         );
       }
 
-      // Update layar monitor
       const xs = document.getElementById('xrayStatusText');
       if (xs) {
         xs.setAttribute('value', `PASIEN: ${nama}\nBagian: ${bagian}\nSIAP SCAN`);
       }
+
+      // =========================================================================
+      // SOLUSI BYPASS CACHE A-FRAME (ANTI LAYAR HITAM)
+      // =========================================================================
+      let namaFile = 'hasil xray.avif'; 
+      const bagianPilihan = bagian.toLowerCase();
+
+      if (bagianPilihan.includes('dada') || bagianPilihan.includes('thorax')) {
+        namaFile = 'dada.jpg';
+      } else if (bagianPilihan.includes('perut') || bagianPilihan.includes('abdomen')) {
+        namaFile = 'perut.jpg';
+      } else if (bagianPilihan.includes('kepala') || bagianPilihan.includes('skull')) {
+        namaFile = 'kepala.jpg';
+      } else if (bagianPilihan.includes('atas')) {
+        namaFile = 'lengan.jpg';
+      } else if (bagianPilihan.includes('bawah')) {
+        namaFile = 'kaki.jpg';
+      } else if (bagianPilihan.includes('spine') || bagianPilihan.includes('vertebra')) {
+        namaFile = 'punggung.jpg';
+      }
+
+      const pathGambarBaru = 'Image/' + namaFile;
+
+      // Sasar langsung elemen VR-nya menggunakan pencarian query
+      const sceneEls = document.querySelectorAll('*');
+      sceneEls.forEach(el => {
+        const srcAttr = el.getAttribute('src');
+        const matAttr = el.getAttribute('material');
+
+        if (srcAttr === '#hasilXray' || String(srcAttr).includes('hasil xray')) {
+          el.setAttribute('src', pathGambarBaru);
+        }
+        
+        if (matAttr) {
+          if (typeof matAttr === 'object' && (matAttr.src === '#hasilXray' || String(matAttr.src).includes('hasil xray'))) {
+            el.setAttribute('material', 'src', pathGambarBaru);
+          } else if (typeof matAttr === 'string' && matAttr.includes('#hasilXray')) {
+            el.setAttribute('material', `src: url(${pathGambarBaru})`);
+          }
+        }
+      });
+      // =========================================================================
 
       const msg = document.getElementById('pasienSavedMsg');
       msg.style.display = 'block';
@@ -484,14 +530,12 @@
       }, 1800);
     });
 
-    // Klik di luar form = tutup
     document.getElementById('patientFormOverlay').addEventListener('click', (e) => {
       if (e.target.id === 'patientFormOverlay') {
         document.getElementById('patientFormOverlay').style.display = 'none';
       }
     });
 
-    // Update scan counter dari event
     let scanN = 0;
     document.addEventListener('xray-action', (e) => {
       if (e.detail.action === 'ambilCitra') {
