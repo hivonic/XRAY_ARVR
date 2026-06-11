@@ -195,6 +195,7 @@
   <script src="js/room-props-component.js"></script>
   <script src="js/xray-monitor-component.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/collimator-component.js"></script>
 </head>
 
 <body>
@@ -312,6 +313,7 @@
   </div>
 
   <a-scene
+    kontrol-kolimasi
     cursor="rayOrigin: mouse"
     raycaster="objects: .clickable"
     renderer="antialias: true; colorManagement: true">
@@ -343,6 +345,48 @@
       id="xrayGantrySystem"
       gltf-model="#bedPairModel"
       position="0 2.9 0"  rotation="0 0 0"    scale="1 1 1">      </a-entity>
+
+      <a-entity position="-1.2 1.5 0.1" rotation="0 90 0">
+      
+      <a-box width="0.8" height="0.5" depth="0.05" color="#222222"></a-box>
+      <a-text value="KONTROL KOLIMASI" position="0 0.2 0.03" align="center" color="#ffffff" scale="0.2 0.2 0.2"></a-text>
+
+      <a-text value="Lebar (X)" position="-0.2 0.05 0.03" align="center" color="#aaaaaa" scale="0.15 0.15 0.15"></a-text>
+      <a-box id="btnLebarMin" class="clickable" position="-0.3 -0.1 0.03" width="0.1" height="0.1" depth="0.02" color="#ff4444">
+        <a-text value="-" position="0 0 0.02" align="center" scale="0.3 0.3 0.3"></a-text>
+      </a-box>
+      <a-box id="btnLebarPlus" class="clickable" position="-0.1 -0.1 0.03" width="0.1" height="0.1" depth="0.02" color="#44ff44">
+        <a-text value="+" position="0 0 0.02" align="center" scale="0.3 0.3 0.3"></a-text>
+      </a-box>
+
+      <a-text value="Panjang (Y)" position="0.2 0.05 0.03" align="center" color="#aaaaaa" scale="0.15 0.15 0.15"></a-text>
+      <a-box id="btnPanjangMin" class="clickable" position="0.1 -0.1 0.03" width="0.1" height="0.1" depth="0.02" color="#ff4444">
+        <a-text value="-" position="0 0 0.02" align="center" scale="0.3 0.3 0.3"></a-text>
+      </a-box>
+      <a-box id="btnPanjangPlus" class="clickable" position="0.3 -0.1 0.03" width="0.1" height="0.1" depth="0.02" color="#44ff44">
+        <a-text value="+" position="0 0 0.02" align="center" scale="0.3 0.3 0.3"></a-text>
+      </a-box>
+
+    </a-entity>
+
+    <a-entity id="collimatorSystem" position="0 1.05 0"> 
+      
+      <a-plane 
+        id="collimatorLightField" 
+        position="0 0.01 0" 
+        rotation="90 0 0" 
+        width="0.8" 
+        height="0.8" 
+        color="#ffff00" 
+        opacity="0.35" 
+        transparent="true"
+        side="double">
+      </a-plane>
+
+      <a-plane position="0 0.012 0" rotation="90 0 0" width="0.01" height="0.8" color="#ff0000" id="crosshairY" side="double"></a-plane>
+      <a-plane position="0 0.012 0" rotation="90 0 0" width="0.8" height="0.01" color="#ff0000" id="crosshairX" side="double"></a-plane>
+      
+    </a-entity>
 
     <a-cone 
       id="xrayBeam" 
