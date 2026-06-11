@@ -325,6 +325,7 @@
       <a-asset-item id="bedPolePairModel" src="Model/Pasangan_Tiang.glb"></a-asset-item>
       <a-asset-item id="ceilingLight" src="Model/ceiling_light_02.glb"></a-asset-item>
       <a-asset-item id="maleBody"     src="Model/poppy_playtime_chapter_5_-_hazmat_guy.glb"></a-asset-item>
+      <a-asset-item id="modelCArm" src="Model/c_arm_xray_device.glb"></a-asset-item>
       <img id="imgThorax" src="Image/hasil thorax.avif">
       <img id="imgAbdomen" src="Image/hasil abdomen.jpg">
       <img id="imgLower" src="Image/hasil lower.jfif">
@@ -341,6 +342,12 @@
              material="src: url(data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Crect width='64' height='64' fill='%23cfd8dc'/%3E%3Crect x='1' y='1' width='62' height='62' fill='%23f8f9fa'/%3E%3C/svg%3E); repeat: 25 25;"></a-plane>
 
     <a-entity xray-bed></a-entity>
+
+    <a-entity
+      id="cArmMachine"
+      gltf-model="#modelCArm"
+      position="-3.5 0 -4.5"  rotation="0 180 0"      scale="1 1 1">         </a-entity>
+
     <a-entity
       id="xrayGantrySystem"
       gltf-model="#bedPairModel"

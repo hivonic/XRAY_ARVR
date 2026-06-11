@@ -27,7 +27,7 @@ AFRAME.registerComponent('room-props', {
     this._buildModernBookshelf(el, '4.75 0 -0.75');
 
     // ============ MEJA PENDAFTARAN (Desain L-Shape Presisi) ============
-    this._buildRegistrationDesk(el, '-3.5 0 -3.5');
+    //this._buildRegistrationDesk(el, '-3.5 0 -3.5');
 
     // Ruang Operator 
     this._buildOperatorChair(el, '3.2 0 2.5');
