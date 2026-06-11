@@ -224,19 +224,35 @@ AFRAME.registerComponent('xray-monitor', {
   _lihatData: function () {
     if (!this._isDataSaved) return; // Hanya bisa lihat jika sudah disimpan
     
+    // --- AMBIL PILIHAN DARI FORM HTML ---
+    const dropdownTubuh = document.getElementById('fBagian');
+    let targetGambar = '#hasilXray'; // Default jika form belum diisi/error
+    
+    if (dropdownTubuh && dropdownTubuh.value) {
+        targetGambar = dropdownTubuh.value; // Mengambil '#imgAbdomen' dll
+    }
+
     const screenEl = document.querySelector('#xrayScreenDisplay');
     const statusEl = document.querySelector('#xrayStatusText');
     if (screenEl) {
-      // Munculkan tekstur gambar ke layar
-      screenEl.setAttribute('material', 'src: #hasilXray');
+      // Tampilkan gambar yang dipilih ke layar monitor
+      screenEl.setAttribute('material', 'src: ' + targetGambar);
       screenEl.setAttribute('color', '#ffffff');
     }
-    if (statusEl) statusEl.setAttribute('value', ''); // Sembunyikan teks agar tidak nutupin gambar
+    if (statusEl) statusEl.setAttribute('value', ''); 
   },
 
   _cetakData: function () {
     if (!this._isDataSaved) return;
     
+    // --- AMBIL PILIHAN DARI FORM HTML ---
+    const dropdownTubuh = document.getElementById('fBagian');
+    let targetGambar = '#hasilXray'; 
+    
+    if (dropdownTubuh && dropdownTubuh.value) {
+        targetGambar = dropdownTubuh.value;
+    }
+
     const printOut = document.querySelector('#xrayPrintOut');
     const statusEl = document.querySelector('#xrayStatusText');
     
@@ -245,10 +261,12 @@ AFRAME.registerComponent('xray-monitor', {
     }
 
     if (printOut) {
-      // Reset posisi kertas ke dalam mesin, lalu munculkan dan jalankan animasi
+      // Ubah gambar pada kertas sebelum mesin mencetaknya
+      printOut.setAttribute('material', 'src: ' + targetGambar);
+      
       printOut.setAttribute('position', '1.2 0.22 0.3');
       printOut.setAttribute('visible', 'true');
-      printOut.emit('do-print'); // Triger animasi keluar
+      printOut.emit('do-print');
     }
   },
 

@@ -263,13 +263,13 @@
           <label>Bagian / Poli</label>
           <select id="fBagian">
             <option value="">— Pilih —</option>
-            <option>Thorax / Dada</option>
-            <option>Abdomen / Perut</option>
-            <option>Kepala / Skull</option>
-            <option>Ekstremitas Atas</option>
-            <option>Ekstremitas Bawah</option>
-            <option>Vertebra / Spine</option>
-            <option>Pelvis / Panggul</option>
+            <option value="#imgThorax">Thorax / Dada</option>
+            <option value="#imgAbdomen">Abdomen / Perut</option>
+            <option value="#imgKepala">Kepala / Skull</option>
+            <option value="#imgUpper">Ekstremitas Atas</option>
+            <option value="#imgLower">Ekstremitas Bawah</option>
+            <option value="#imgSpine">Vertebra / Spine</option>
+            <option value="#imgPelvis">Pelvis / Panggul</option>
           </select>
         </div>
 
@@ -319,11 +319,18 @@
     <a-assets>
       <a-asset-item id="bedTopModel" src="Model/Kasur_atas.glb"></a-asset-item>
       <a-asset-item id="bedBottomModel" src="Model/Kasur_bawah.glb"></a-asset-item>
-      <a-asset-item id="bedPairModel" src="Model/Pasangan.glb"></a-asset-item>
+      <a-asset-item id="bedPairModel" src="Model/Pasangan .glb"></a-asset-item>
       <a-asset-item id="bedPolePairModel" src="Model/Pasangan_Tiang.glb"></a-asset-item>
       <a-asset-item id="ceilingLight" src="Model/ceiling_light_02.glb"></a-asset-item>
       <a-asset-item id="maleBody"     src="Model/poppy_playtime_chapter_5_-_hazmat_guy.glb"></a-asset-item>
-      <img id="hasilXray" src="Image/hasil xray.avif">
+      <img id="imgThorax" src="Image/hasil thorax.avif">
+      <img id="imgAbdomen" src="Image/hasil abdomen.jpg">
+      <img id="imgLower" src="Image/hasil lower.jfif">
+      <img id="imgPelvis" src="Image/hasil pelvis.jpeg">
+      <img id="imgKepala" src="Image/hasil skull.jpg">
+      <img id="imgSpine" src="Image/hasil spine.jpg">
+      <img id="imgUpper" src="Image/hasil upper.jpeg">
+
     </a-assets>
 
     <a-entity room-builder></a-entity>
@@ -332,6 +339,10 @@
              material="src: url(data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Crect width='64' height='64' fill='%23cfd8dc'/%3E%3Crect x='1' y='1' width='62' height='62' fill='%23f8f9fa'/%3E%3C/svg%3E); repeat: 25 25;"></a-plane>
 
     <a-entity xray-bed></a-entity>
+    <a-entity
+      id="xrayGantrySystem"
+      gltf-model="#bedPairModel"
+      position="0 2.9 0"  rotation="0 0 0"    scale="1 1 1">      </a-entity>
 
     <a-cone 
       id="xrayBeam" 
