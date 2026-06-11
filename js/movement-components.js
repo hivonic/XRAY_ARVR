@@ -23,11 +23,8 @@ AFRAME.registerComponent('limit-room', {
     // Tembok Depan (Ruang Operator). Pintu terbuka di X = 1.8 sampai 2.8
     const nabrakTembokSampingPintu = pos.x > 2.8 && pos.x < 5.0 && pos.z > -0.2 && pos.z < 0.2;
 
-    // Batas Meja X-Ray di tengah
-    const nabrakMeja = pos.x > -1.2 && pos.x < 1.2 && pos.z > -1.5 && pos.z < 1.5;
-
     // Jika menabrak salah satu objek di atas, kembalikan ke posisi sebelumnya
-    if (nabrakKaca || nabrakTembokSampingPintu || nabrakMeja) {
+    if (nabrakKaca || nabrakTembokSampingPintu) {
       pos.x = this.oldX;
       pos.z = this.oldZ;
     } else {
