@@ -1,7 +1,7 @@
 // ==============================
 // reset-components.js
 // Fungsi initial pose dan tombol reset.
-// Reset semua sekarang juga me-reset kasur atas.
+// Reset semua sekarang juga me-reset kasur atas dan kolimator.
 // ==============================
 
 function applyInitialArmPose(side) {
@@ -144,6 +144,22 @@ function applyInitialLegPose(side) {
   console.log('Reset leg pose:', side);
 }
 
+function resetXrayBedTop() {
+  const xrayBed = document.querySelector('[xray-bed]');
+
+  if (xrayBed && xrayBed.components['xray-bed']) {
+    xrayBed.components['xray-bed'].resetBedTop();
+  }
+}
+
+function resetKolimator() {
+  const scene = document.querySelector('a-scene');
+
+  if (scene && scene.components['kontrol-kolimasi']) {
+    scene.components['kontrol-kolimasi'].resetKolimasi();
+  }
+}
+
 AFRAME.registerComponent('reset-body-and-arm-pose', {
   init: function () {
     this.el.addEventListener('click', () => {
@@ -163,11 +179,10 @@ AFRAME.registerComponent('reset-body-and-arm-pose', {
       body.setAttribute('rotation', initialPose.rotation);
 
       // Reset kasur atas ke posisi awal.
-      const xrayBed = document.querySelector('[xray-bed]');
+      resetXrayBedTop();
 
-      if (xrayBed && xrayBed.components['xray-bed']) {
-        xrayBed.components['xray-bed'].resetBedTop();
-      }
+      // Reset kolimator ke ukuran awal.
+      resetKolimator();
 
       // Reset tangan dan kaki.
       applyInitialArmPose('all');
@@ -175,7 +190,7 @@ AFRAME.registerComponent('reset-body-and-arm-pose', {
 
       updateMaleBodyMatrix();
 
-      console.log('Reset tubuh, tangan, kaki, dan kasur atas ke initial pose.');
+      console.log('Reset tubuh, tangan, kaki, kasur atas, dan kolimator ke initial pose.');
     });
   }
 });
